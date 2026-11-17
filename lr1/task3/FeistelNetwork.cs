@@ -84,14 +84,13 @@ namespace MyCryptoProject.lr1.Task3
                 }
                 else
                 {
-                    L = R;
-                    R = newR;
+                    L = newR;
                 }
             }
 
             byte[] result = new byte[_blockSizeBytes];
-            Buffer.BlockCopy(R, 0, result, 0, halfSize);
-            Buffer.BlockCopy(L, 0, result, halfSize, halfSize);
+            Buffer.BlockCopy(L, 0, result, 0, halfSize);
+            Buffer.BlockCopy(R, 0, result, halfSize, halfSize);
 
             return result;
         }

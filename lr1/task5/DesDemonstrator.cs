@@ -138,7 +138,6 @@ public:
             }
             finally
             {
-                // Гарантированное удаление временных файлов (чистота на жестком диске)
                 if (File.Exists(originalFile)) File.Delete(originalFile);
                 if (File.Exists(encryptedFile)) File.Delete(encryptedFile);
                 if (File.Exists(decryptedFile)) File.Delete(decryptedFile);

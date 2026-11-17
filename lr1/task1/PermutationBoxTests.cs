@@ -67,7 +67,6 @@ namespace MyCryptoProject.lr1.Task1
             byte[] input = new byte[8]; // 64 бита (8 байт)
             int[] pc1PBox = new int[56];
 
-            // Берём первые 56 битов, игнорируя последние 8
             for (int i = 0; i < 56; i++)
             {
                 pc1PBox[i] = i + 1;

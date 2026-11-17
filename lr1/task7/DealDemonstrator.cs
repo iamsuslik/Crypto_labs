@@ -21,10 +21,10 @@ namespace MyCryptoProject.lr1.Task7
             Console.Clear();
             PrintHeader("ЗАДАНИЕ №7: КОМПЛЕКСНОЕ ТЕСТИРОВАНИЕ АЛГОРИТМА DEAL (БЛОК 16 БАЙТ)");
 
-            // 1. Создаем экземпляр нашего DES (он нужен внутри DEAL как раундовая функция)
+            // 1. экземпляр нашего DES 
             var desInstance = new DesCipher();
 
-            // 2. Создаем экземпляр шифра DEAL, передавая в него DES
+            // 2. экземпляр шифра DEAL, передавая в него DES
             var dealCipher = new DealCipher(desInstance);
 
             // Ключ и IV для DEAL должны быть размером ровно 16 байт (128 бит), так как блок DEAL = 16 байт
@@ -151,7 +151,7 @@ class RedBlackTreeAllocator {
             int mediaSize = 512 * 1024; // 512 Кб
             byte[] mediaData = new byte[mediaSize];
             new Random().NextBytes(mediaData);
-            for (int i = mediaSize - 50; i < mediaSize; i++) mediaData[i] = 0x00; // Нулевой хвост
+            for (int i = mediaSize - 50; i < mediaSize; i++) mediaData[i] = 0x00;
 
             string originalMedia = "deal_media.dat";
             string encryptedMedia = "deal_media.enc";
