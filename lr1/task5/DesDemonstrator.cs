@@ -38,6 +38,9 @@ namespace MyCryptoProject.lr1.Task5
             // ТЕСТ 4: Сравнение скорости режимов (Бенчмарк параллелизма)
             await RunBenchmarkAsync(des, key, iv);
 
+            // ТЕСТ 5: Реальный медиа-файл (JPEG)
+            await TestBinaryMediaFileAsync1(des, key, iv);
+
             PrintSuccess("\nВСЕ ТЕСТЫ ЗАДАНИЯ №5 УСПЕШНО ПРОЙДЕНЫ!");
         }
 
@@ -223,6 +226,57 @@ public:
                 sw.Stop();
                 string parallelNote = (mode == CipherMode.ECB || mode == CipherMode.CTR) ? "[Параллельный]" : "[Последовательный]";
                 Console.WriteLine($"   Режим {mode,-5} {parallelNote,-17}: Время = {sw.ElapsedMilliseconds,4} мс | Скорость: {(1.0 / sw.Elapsed.TotalSeconds):F2} МБ/с");
+            }
+        }
+
+        #endregion
+
+        #region Тест 5: Реальный медиа-файл (Изображение JPEG)
+
+        private static async Task TestBinaryMediaFileAsync1(DesCipher des, byte[] key, byte[] iv)
+        {
+            PrintSubHeader("5. ТЕСТИРОВАНИЕ РЕАЛЬНОГО ИЗОБРАЖЕНИЯ (JPEG)");
+
+            string originalMedia = "test_image.jpg";
+            string encryptedMedia = "test_image.enc";
+            string decryptedMedia = "restored_image.jpg";
+
+            if (!File.Exists(originalMedia))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"   [ОШИБКА] Файл '{originalMedia}' не найден в папке проекта! Положите картинку рядом с Program.cs");
+                Console.ResetColor();
+                return;
+            }
+
+            try
+            {
+                string originalHash = GetSha256(originalMedia);
+
+                var context = new SymmetricCryptoContext(
+                    cipher: des,
+                    key: key,
+                    cipherMode: CipherMode.CBC,
+                    paddingMode: PaddingMode.PKCS7,
+                    iv: iv
+                );
+
+                // Шифруем и расшифровываем файл-картинку
+                await context.EncryptFileAsync(originalMedia, encryptedMedia);
+                await context.DecryptFileAsync(encryptedMedia, decryptedMedia);
+
+                string restoredHash = GetSha256(decryptedMedia);
+
+                bool isHashIdentical = originalHash == restoredHash;
+
+                Console.WriteLine($"   Исходный файл:           {originalMedia} ({new FileInfo(originalMedia).Length / 1024} Кб)");
+                Console.WriteLine($"   Хэш исходной картинки:   {originalHash}");
+                Console.WriteLine($"   Хэш расшифрованной:      {restoredHash}");
+                PrintResult("Контрольная сумма SHA-256 восстановленного JPEG-изображения", isHashIdentical);
+            }
+            finally
+            {
+                if (File.Exists(encryptedMedia)) File.Delete(encryptedMedia);
             }
         }
 
