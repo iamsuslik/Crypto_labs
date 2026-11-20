@@ -11,17 +11,16 @@ namespace MyCryptoProject.lr2
         static void Main(string[] args)
         {
             Console.WriteLine("================================================================================");
-            KонсольЗапускТестов();
+            RunAllTests();
         }
 
-        private static void KонсольЗапускТестов()
+        private static void RunAllTests()
         {
-            // Запускаем тесты для каждого задания по очереди
             CryptoMathServiceTests.RunTests();
             PrimalityTestsRunner.RunTests();
             RsaServiceTests.RunTests();
             WienerAttackTests.RunTests();
-
         }
     }
 }
+
