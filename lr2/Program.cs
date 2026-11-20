@@ -22,9 +22,6 @@ namespace MyCryptoProject.lr2
             RsaServiceTests.RunTests();
             WienerAttackTests.RunTests();
 
-            Console.WriteLine("================================================================================");
-            Console.WriteLine("   ТЕСТЫ ЛАБОРАТОРНОЙ РАБОТЫ №2 ВЫПОЛНЕНЫ!");
-            Console.WriteLine("================================================================================");
         }
     }
 }
