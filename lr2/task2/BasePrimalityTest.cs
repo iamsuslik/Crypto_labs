@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using MyCryptoProject.lr2.task1;
 
@@ -14,9 +15,27 @@ namespace MyCryptoProject.lr2.task2
 
             int k = CalculateIterationsCount(minProbability);
 
+            BigInteger maxPossibleUnique = n - 3;
+            if (k > maxPossibleUnique && maxPossibleUnique > 0)
+            {
+                k = (int)maxPossibleUnique;
+            }
+
+            HashSet<BigInteger> usedBases = new HashSet<BigInteger>();
+
             for (int i = 0; i < k; i++)
             {
-                BigInteger a = GenerateRandomBase(n);
+                BigInteger a;
+                int safetyCounter = 0;
+
+                do
+                {
+                    a = GenerateRandomBase(n);
+                    safetyCounter++;
+
+                    if (safetyCounter > 1000) break;
+
+                } while (!usedBases.Add(a));
 
                 if (!ExecuteIteration(n, a))
                 {

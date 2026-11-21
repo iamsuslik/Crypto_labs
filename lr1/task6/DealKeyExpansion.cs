@@ -34,6 +34,10 @@ namespace MyCryptoProject.lr1.Task6
             {
                 byte[] currentDesKey = (i % 2 == 0) ? k1 : k2;
 
+                byte roundConstant = (byte)(1 << i);
+
+                currentVal[currentVal.Length - 1] ^= roundConstant;
+                
                 _desCipher.SetKey(currentDesKey);
                 currentVal = _desCipher.EncryptBlock(currentVal);
                 

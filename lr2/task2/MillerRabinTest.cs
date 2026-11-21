@@ -26,6 +26,9 @@ namespace MyCryptoProject.lr2.task2
                 x = CryptoMathService.ManualModPow(x, 2, n);
                 if (x == n - 1)
                     return true;
+                if (x == 1) 
+                    return false;
+
             }
 
             return false;
